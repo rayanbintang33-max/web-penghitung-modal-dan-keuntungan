@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProfitFlow - Dashboard Keuangan</title>
+    <!-- Menghubungkan ke file CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="logo">
+            ◈ Profit<span>Flow</span>
+        </div>
+
+        <h4>MENU UTAMA</h4>
+        <a href="#dashboard" class="active">▦ Dashboard</a>
+        <a href="#calculator">▣ Hitung Modal</a>
+        <a href="#hasil">◈ Keuntungan</a>
+        <a href="#grafik">▥ Grafik Keuangan</a>
+        <a href="#riwayat">▤ Riwayat</a>
+
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+
+        <!-- TOPBAR -->
+        <div class="topbar" id="dashboard">
+            <div class="welcome">
+                <h1>Selamat Datang! 👋</h1>
+                <p>Berikut adalah ringkasan keuangan usaha Anda.</p>
+            </div>
+
+            <div class="profile">
+                <div class="profile-icon">👤</div>
+                <div>
+                    <p>Admin Usaha</p>
+                    <small>Dashboard Keuangan</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- RINGKASAN -->
+        <div class="dashboard-grid">
+
+            <div class="panel summary">
+                <h3>Total Modal</h3>
+                <div class="value purple" id="cardModal">Rp0</div>
+                <p class="small">Modal dan biaya operasional</p>
+            </div>
+
+            <div class="panel summary">
+                <h3>Total Pendapatan</h3>
+                <div class="value" id="cardPendapatan">Rp0</div>
+                <p class="small">Total hasil penjualan</p>
+            </div>
+
+            <div class="panel summary">
+                <h3>Keuntungan Bersih</h3>
+                <div class="value green" id="cardUntung">Rp0</div>
+                <p class="small">Pendapatan dikurangi total modal</p>
+            </div>
+
+            <!-- FORM HITUNG -->
+            <div class="panel calculator" id="calculator">
+                <h3>▣ Kalkulator Modal & Keuntungan</h3>
+
+                <div class="form-group">
+                    <label>Nama Usaha</label>
+                    <input type="text" id="namaUsaha" placeholder="Contoh: Usaha Katering">
+                </div>
+
+                <div class="form-group">
+                    <label>Modal Awal (Rp)</label>
+                    <input type="number" id="modal" placeholder="Masukkan modal awal" min="0">
+                </div>
+
+                <div class="form-group">
+                    <label>Biaya Operasional (Rp)</label>
+                    <input type="number" id="biaya" placeholder="Masukkan biaya operasional" min="0">
+                </div>
+
+                <div class="form-group">
+                    <label>Total Pendapatan / Penjualan (Rp)</label>
+                    <input type="number" id="pendapatan" placeholder="Masukkan total penjualan" min="0">
+                </div>
+
+                <button class="calculate-btn" onclick="hitung()">
+                    ✦ Hitung Keuangan Sekarang
+                </button>
+            </div>
+
+            <!-- HASIL -->
+            <div class="panel result" id="hasil">
+                <h3>Hasil Perhitungan</h3>
+                <p class="small">Keuntungan / Kerugian</p>
+
+                <div class="profit-number" id="hasilUntung">Rp0</div>
+
+                <div class="result-item">
+                    <span>Total Modal</span>
+                    <span id="hasilModal">Rp0</span>
+                </div>
+
+                <div class="result-item">
+                    <span>Pendapatan</span>
+                    <span id="hasilPendapatan">Rp0</span>
+                </div>
+
+                <div class="result-item">
+                    <span>Margin</span>
+                    <span id="margin">0%</span>
+                </div>
+
+                <div class="result-item">
+                    <span>Status</span>
+                    <span id="statusHasil">Belum dihitung</span>
+                </div>
+            </div>
+
+            <!-- GRAFIK -->
+            <div class="panel chart" id="grafik">
+                <h3>▥ Grafik Perbandingan Keuangan</h3>
+                <p class="small">Perbandingan modal, pendapatan, dan keuntungan.</p>
+
+                <div class="chart-bars">
+                    <div class="bar-item">
+                        <div class="bar" id="barModal" style="height:5px"></div>
+                        <span>Modal</span>
+                    </div>
+
+                    <div class="bar-item">
+                        <div class="bar" id="barPendapatan" style="height:5px"></div>
+                        <span>Pendapatan</span>
+                    </div>
+
+                    <div class="bar-item">
+                        <div class="bar" id="barUntung" style="height:5px"></div>
+                        <span>Keuntungan</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STATUS -->
+            <div class="panel status">
+                <h3>◈ Analisis Usaha</h3>
+
+                <div class="status-box">
+                    <p>Persentase Keuntungan</p>
+                    <h2 class="purple" id="persentase">0%</h2>
+                </div>
+
+                <div class="status-box">
+                    <p>Kondisi Usaha</p>
+                    <h2 id="kondisi">Menunggu Data</h2>
+                </div>
+            </div>
+
+            <!-- RIWAYAT -->
+            <div class="panel history" id="riwayat">
+                <h3>▤ Riwayat Perhitungan</h3>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nama Usaha</th>
+                            <th>Total Modal</th>
+                            <th>Pendapatan</th>
+                            <th>Keuntungan</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="riwayatData">
+                        <tr>
+                            <td colspan="5" style="text-align:center">
+                                Belum ada riwayat perhitungan.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <button class="reset-btn" onclick="resetData()">
+                    Reset Data
+                </button>
+            </div>
+
+        </div>
+
+        <footer id="kontak">
+            © 2026 ProfitFlow | Aplikasi Penghitung Modal dan Keuntungan
+        </footer>
+
+    </main>
+</div>
+
+<!-- Menghubungkan ke file JavaScript -->
+<script src="script.js"></script>
+</body>
+</html>
